@@ -1,2 +1,9 @@
-%h1 Welcome
+%h1 Welcome to a Troubadour code site
 
+%p
+    Troubadour is a sinatra-based application for hosting code projects.
+
+%ul
+- projects.each do |project|
+    %li
+        %a{:href => project[0]}= project[1]['title']

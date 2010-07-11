@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+#require 'ruby-debug'
 
 set :views, File.dirname(__FILE__) + '/templates'
 set :haml, {:format => :html5}
@@ -8,21 +9,20 @@ set :haml, {:format => :html5}
 
 
 get '/' do
-  ps = projects
-  p = project('index')
-  haml :index, :locals => {:projects => ps, :project =>p}
+  projects = all_projects
+  haml :index, :locals => {:projects => projects, :project =>home}
 end
 
 
 get '/:project' do
-  p = project(params[:project])
-  haml :project, :locals => {:project => p, :title => " - " + p["title"]}
+  project = one_project(params[:project])
+  haml :project, :locals => {:project => project}
 end
 
 
 
 helpers do
-  def projects
+  def all_projects
     projects = {
       'troubadour' => {
         'title' => 'Troubadour',
@@ -32,16 +32,18 @@ helpers do
         'title' => 'Gravity. Well...',
         'svn' => 'http://svn.otaqui.com/gravity-well/',
         'template' => 'gravity-well'
-      },
-      'index' => {
-        'title' => 'Code'
       }
     }
     projects
   end
-  def project(name)
-    ps = projects
+  def one_project(name)
+    ps = all_projects
     ps[name]
+  end
+  def home
+    project = {
+      'title' => 'Code'
+    }
   end
 end
 
