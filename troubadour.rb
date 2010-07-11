@@ -16,7 +16,11 @@ end
 
 get '/:project' do
   project = one_project(params[:project])
-  haml :project, :locals => {:project => project}
+  if project['template'] do
+    haml :project['template'], :locals => {:project => project}
+  else
+    haml :project, :locals => {:project => project}
+  end
 end
 
 
