@@ -3,7 +3,7 @@
 %p
     Troubadour is a sinatra-based application for hosting code projects.
 
-%ul
-- projects.each do |project|
-    %li
-        %a{:href => project[0]}= project[1]['title']
+%ul#projects
+    - projects.each do |project|
+        %li
+            %a{:href => project[0]}= project[1]['title']
