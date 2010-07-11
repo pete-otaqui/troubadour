@@ -13,6 +13,11 @@ get '/' do
   haml :index, :locals => {:projects => projects, :project =>home}
 end
 
+get '/style/troubadour.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :troubadour
+end
+
 
 get '/:project' do
   project = one_project(params[:project])
@@ -22,17 +27,18 @@ get '/:project' do
 end
 
 
-
 helpers do
   def all_projects
     projects = {
       'troubadour' => {
         'title' => 'Troubadour',
-        'github' => 'http://github.com/pete-otaqui/troubadour'
+        'git' => 'http://github.com/pete-otaqui/troubadour',
+        'description' => 'Troubadour runs this site - it allows you to quickly put up a page about a code project, and customize this easily'
       },
       'gravity-well' => {
         'title' => 'Gravity. Well...',
         'svn' => 'http://svn.otaqui.com/gravity-well/',
+        'description' => 'An experiment with Base2, SVG and Raphael JS.',
         'template' => 'gravity-well'
       }
     }
