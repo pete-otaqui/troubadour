@@ -10,20 +10,21 @@ set :haml, {:format => :html5}
 
 get '/' do
   projects = all_projects
-  haml :index, :locals => {:projects => projects, :project =>home}
+  haml :index, :locals => {:projects => projects, :project => home, :home => home}
 end
 
 get '/style/troubadour.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :troubadour
+  sass :troubadour, :syntax => 'scss'
 end
 
 
 get '/:project' do
+  projects = all_projects
   project = one_project(params[:project])
   template = project['template']
   template ||= 'project'
-  haml :"#{template}", :locals => {:project => project}
+  haml :"#{template}", :locals => {:projects => projects, :project => project, :home => home}
 end
 
 
@@ -32,15 +33,24 @@ helpers do
     projects = {
       'troubadour' => {
         'title' => 'Troubadour',
-        'git' => 'http://github.com/pete-otaqui/troubadour',
-        'description' => 'Troubadour runs this site - it allows you to quickly put up a page about a code project, and customize this easily'
+        'repo' => 'http://github.com/pete-otaqui/troubadour',
+        'git' => true,
+        'description' => 'Troubadour runs this site - it allows you to quickly put up a page about a code project, and customize this easily.'
       },
       'gravity-well' => {
         'title' => 'Gravity. Well...',
-        'svn' => 'http://svn.otaqui.com/gravity-well/',
+        'repo' => 'http://svn.otaqui.com/gravity-well/',
+        'svn' => true,
         'description' => 'An experiment with Base2, SVG and Raphael JS.',
         'template' => 'gravity-well'
-      }
+      },
+      'vonnegut' => {
+        'title' => 'Vonnegut',
+        'repo' => 'http://github.com/bbc-frameworks/vonnegut',
+        'git' => true,
+        'description' => 'A Zend_Reflection based PHP documentation generator/'
+      },
+      
     }
     projects
   end

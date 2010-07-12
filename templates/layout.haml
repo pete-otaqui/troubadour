@@ -5,4 +5,15 @@
         %link{:rel => "shortcut icon", :href => "favicon.ico"}
         %link{:rel => "stylesheet", :type => "text/css", :href => "/style/troubadour.css"}
     %body
-    =yield
+    %div#root
+        %div#page
+            %div#head
+                Troubadour project pages
+            %div#body
+                %div#main
+                    =yield
+                %div#aside= haml :_aside, :layout => false, :locals => {:projects=>projects}
+                %div#meta foo
+            %div#foot
+                Powered by
+                %a{:href => 'http://otaqui.com/code/troubadour'} Troubadour

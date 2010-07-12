@@ -1,1 +1,8 @@
-%h1.standard= project["title"]
+%div#project
+    %h1.standard= project["title"]
+    
+    %p= project["description"]
+    
+    %div= haml :_repo, :layout => false, :locals => {:project => project}
+%div#links
+    %div= haml :_projects, :layout => false, :locals => {:projects => projects}
