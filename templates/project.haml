@@ -4,5 +4,11 @@
     %p= project["description"]
     
     %div= haml :_repo, :layout => false, :locals => {:project => project}
-%div#links
-    %div= haml :_projects, :layout => false, :locals => {:projects => projects}
+    
+    - if rss
+        %h2 Recent Updates
+        %ul.project-updates
+            - rss.items.each do |item|
+                %li
+                    %a{:href => item.link, :style => "background-image: url(#{item.media_thumbnail_url})"}
+                        #{item.title}

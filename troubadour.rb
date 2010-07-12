@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
-#require 'ruby-debug'
+require 'simple-rss'
+require 'open-uri'
+require 'ruby-debug'
 
 set :views, File.dirname(__FILE__) + '/templates'
 set :haml, {:format => :html5}
@@ -24,7 +26,18 @@ get '/:project' do
   project = one_project(params[:project])
   template = project['template']
   template ||= 'project'
-  haml :"#{template}", :locals => {:projects => projects, :project => project, :home => home}
+  rss = false
+  if project["git"]
+    url = project['repo'] + '/commits/master.atom'
+    puts "GETTING #{url}"
+    rss = SimpleRSS.parse open(url)
+  end
+  haml :"#{template}", :locals => {
+    :projects => projects,
+    :project => project,
+    :home => home,
+    :rss => rss
+  }
 end
 
 
