@@ -1,0 +1,5 @@
+title: Gravity Well
+repo: http://svn.otaqui.com/gravity-well/
+svn: true
+description: "An experiment with Base2, SVG and Raphael JS."
+template: gravity-well

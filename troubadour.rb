@@ -27,11 +27,11 @@ get '/:project' do
   template = project['template']
   template ||= 'project'
   rss = false
-  if project["git"]
-    url = project['repo'] + '/commits/master.atom'
-    puts "GETTING #{url}"
-    rss = SimpleRSS.parse open(url)
-  end
+  # if project["git"]
+  #   url = project['repo'] + '/commits/master.atom'
+  #   puts "GETTING #{url}"
+  #   rss = SimpleRSS.parse open(url)
+  # end
   haml :"#{template}", :locals => {
     :projects => projects,
     :project => project,
@@ -43,28 +43,16 @@ end
 
 helpers do
   def all_projects
-    projects = {
-      'troubadour' => {
-        'title' => 'Troubadour',
-        'repo' => 'http://github.com/pete-otaqui/troubadour',
-        'git' => true,
-        'description' => 'Troubadour runs this site - it allows you to quickly put up a page about a code project, and customize this easily.'
-      },
-      'gravity-well' => {
-        'title' => 'Gravity. Well...',
-        'repo' => 'http://svn.otaqui.com/gravity-well/',
-        'svn' => true,
-        'description' => 'An experiment with Base2, SVG and Raphael JS.',
-        'template' => 'gravity-well'
-      },
-      'vonnegut' => {
-        'title' => 'Vonnegut',
-        'repo' => 'http://github.com/bbc-frameworks/vonnegut',
-        'git' => true,
-        'description' => 'A Zend_Reflection based PHP documentation generator/'
-      },
-      
-    }
+    projects = {}
+    Dir.foreach("projects") do |yml|
+      if yml != '.' && yml != '..' 
+        project_name = yml.sub(/\.yml$/, '')
+        file_name = File.dirname(__FILE__) + "/projects/#{yml}"
+        contents = YAML.load_file(file_name)
+        projects[project_name] = contents
+      end
+    end
+    pp projects
     projects
   end
   def one_project(name)

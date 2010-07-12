@@ -1,0 +1,4 @@
+title: Vonnegut
+repo: http://github.com/bbc-frameworks/vonnegut
+git: true
+description: "A Zend_Reflection based PHP documentation generator"
