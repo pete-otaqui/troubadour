@@ -1,0 +1,8 @@
+%p.repo
+    Hosted in
+    - if project['git']
+        a git
+    - else project['svn']
+        an svn
+    repository at
+    %a{:href => project['repo']}= project['repo']

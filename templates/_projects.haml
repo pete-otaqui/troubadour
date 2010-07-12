@@ -1,0 +1,7 @@
+%ul.projects
+    %li
+        %a{:href => '/'} Home
+    - projects.each do |project|
+        %li
+            %div.title
+                %a{:href => project[0]}= project[1]['title']
